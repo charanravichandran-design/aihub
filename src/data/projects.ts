@@ -1,0 +1,62 @@
+export type ProjectStatus = 'live' | 'beta' | 'in-progress' | 'deprecated'
+
+export type Project = {
+  id: string
+  title: string
+  description: string
+  href: string
+  iconName: string        // Lucide icon name (fallback when no logoUrl)
+  logoUrl?: string        // path to image in /public, e.g. '/logos/myproject.png'
+  accentFrom: string      // Tailwind gradient-from color class
+  accentTo: string        // Tailwind gradient-to color class
+  tags?: string[]
+  status?: ProjectStatus
+}
+
+export const projects: Project[] = [
+  {
+    id: 'skg-onboarding',
+    title: 'SKG Onboarding',
+    description: 'Used to ingest documents and GitHub repos into the SKG Knowledge Base.',
+    href: 'http://127.0.0.1:5500/frontend/index.html',
+    iconName: 'Activity',
+    accentFrom: 'from-cyan-500',
+    accentTo: 'to-indigo-500',
+    tags: ['SKG', 'Capella Cluster'],
+    status: 'live',
+  },
+  {
+  id: 'spec-registry',
+  title: 'Spec Registry',
+  description: 'Central system for managing and storing specifications generated across coding tools and workflows.',
+  href: '#',
+  iconName: 'FileText',
+  accentFrom: 'from-indigo-500',
+  accentTo: 'to-purple-600',
+  tags: ['Platform', 'Specs'],
+  status: 'in-progress',
+  },
+  {
+    id: 'ai-eval',
+    title: 'AI Eval',
+    description: 'Platform for evaluating and analyzing how users interact with and utilize various AI tools across the organization.',
+    href: '#',
+    iconName: 'Activity',
+    accentFrom: 'from-sky-500',
+    accentTo: 'to-blue-600',
+    tags: ['AI', 'Evaluation'],
+    status: 'in-progress',
+  },
+  {
+    id: 'agent-hub',
+    title: 'Agent Hub',
+    description: 'Central hub for discovering, managing, and reusing AI agents built by engineers across the company.',
+    href: '#',
+    iconName: 'Bot',
+    accentFrom: 'from-emerald-500',
+    accentTo: 'to-teal-600',
+    tags: ['Agents', 'Platform'],
+    status: 'in-progress',
+  },
+  
+]

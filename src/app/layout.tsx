@@ -6,8 +6,9 @@ import { Providers } from '@/components/Providers'
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
 
 export const metadata: Metadata = {
-  title: 'AI Hub — Couchbase',
+  title: 'Couchbase AIDLC Hub',
   description: 'Central hub for all AI projects and agents at Couchbase',
+  icons: { icon: '/couchbase-icon.svg' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

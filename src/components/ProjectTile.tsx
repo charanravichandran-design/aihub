@@ -6,6 +6,11 @@ import {
   BrainCircuit,
   Code2,
   FileText,
+  FlaskConical,
+  GitPullRequest,
+  LifeBuoy,
+  PenLine,
+  Plug,
   Search,
   type LucideIcon,
 } from 'lucide-react'
@@ -20,6 +25,11 @@ const iconMap: Record<string, LucideIcon> = {
   BrainCircuit,
   Code2,
   FileText,
+  FlaskConical,
+  GitPullRequest,
+  LifeBuoy,
+  PenLine,
+  Plug,
   Search,
 }
 

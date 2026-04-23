@@ -5,6 +5,7 @@ export type Project = {
   title: string
   description: string
   href: string
+  newTab?: boolean        // force open in new tab even for internal links
   iconName: string        // Lucide icon name (fallback when no logoUrl)
   logoUrl?: string        // path to image in /public, e.g. '/logos/myproject.png'
   accentFrom: string      // Tailwind gradient-from color class
@@ -26,15 +27,15 @@ export const projects: Project[] = [
     status: 'live',
   },
   {
-  id: 'spec-registry',
-  title: 'Spec Registry',
-  description: 'Central system for managing and storing specifications generated across coding tools and workflows.',
-  href: '#',
-  iconName: 'FileText',
-  accentFrom: 'from-indigo-500',
-  accentTo: 'to-purple-600',
-  tags: ['Platform', 'Specs'],
-  status: 'in-progress',
+    id: 'spec-registry',
+    title: 'Spec Registry',
+    description: 'Central system for managing and storing specifications generated across coding tools and workflows.',
+    href: '#',
+    iconName: 'FileText',
+    accentFrom: 'from-indigo-500',
+    accentTo: 'to-purple-600',
+    tags: ['Platform', 'Specs'],
+    status: 'in-progress',
   },
   {
     id: 'ai-eval',
@@ -51,12 +52,13 @@ export const projects: Project[] = [
     id: 'agent-hub',
     title: 'Agent Hub',
     description: 'Central hub for discovering, managing, and reusing AI agents built by engineers across the company.',
-    href: '#',
+    href: '/agents',
+    newTab: true,
     iconName: 'Bot',
     accentFrom: 'from-emerald-500',
     accentTo: 'to-teal-600',
     tags: ['Agents', 'Platform'],
-    status: 'in-progress',
+    status: 'live',
   },
   {
     id: 'engineering-context-mcp',
@@ -68,49 +70,5 @@ export const projects: Project[] = [
     accentTo: 'to-fuchsia-600',
     tags: ['MCP', 'Dev Tools'],
     status: 'live',
-  },
-  {
-    id: 'support-ai',
-    title: 'Support AI',
-    description: 'Enable support engineers to triage, debug, summarize, and hand over support tickets in Zendesk.',
-    href: '#',
-    iconName: 'LifeBuoy',
-    accentFrom: 'from-orange-500',
-    accentTo: 'to-amber-500',
-    tags: ['Support', 'Zendesk'],
-    status: 'in-progress',
-  },
-  {
-    id: 'doc-ai',
-    title: 'Doc AI',
-    description: 'Enable documentation teams to generate fast documentation drafts using SKG and pre-canned skill files.',
-    href: '#',
-    iconName: 'PenLine',
-    accentFrom: 'from-blue-500',
-    accentTo: 'to-indigo-600',
-    tags: ['Docs', 'SKG'],
-    status: 'in-progress',
-  },
-  {
-    id: 'code-review-bot',
-    title: 'Code Review Bot',
-    description: 'Enable it on your repo to get AI-driven code reviews powered by Copilot.',
-    href: '#',
-    iconName: 'GitPullRequest',
-    accentFrom: 'from-green-500',
-    accentTo: 'to-emerald-600',
-    tags: ['Dev Tools', 'Copilot'],
-    status: 'in-progress',
-  },
-  {
-    id: 'test-regression-agent',
-    title: 'Test Regression Agent',
-    description: 'Reviews test regressions and identifies potential regressor PRs automatically.',
-    href: '#',
-    iconName: 'FlaskConical',
-    accentFrom: 'from-rose-500',
-    accentTo: 'to-red-600',
-    tags: ['Testing', 'CI'],
-    status: 'in-progress',
   },
 ]

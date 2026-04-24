@@ -3,6 +3,7 @@ import {
   GitPullRequest,
   LifeBuoy,
   PenLine,
+  SearchCode,
   type LucideIcon,
 } from 'lucide-react'
 import { AppHeader } from '@/components/AppHeader'
@@ -13,12 +14,15 @@ const iconMap: Record<string, LucideIcon> = {
   PenLine,
   GitPullRequest,
   FlaskConical,
+  SearchCode,
 }
 
 const accessStyles: Record<AccessLevel, string> = {
   'All Employees':    'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400',
   'All Engineering':  'bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400',
-  'Only Support Org': 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400',
+  'Support Org': 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400',
+  'Customer Support': 'bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400',
+  'Technical Field Engineers': 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-400',
 }
 
 export default function AgentsPage() {
@@ -98,9 +102,13 @@ export default function AgentsPage() {
 
                     {/* Access badge */}
                     <td className="px-8 py-6 align-top w-52">
-                      <span className={`inline-flex text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap ${accessStyles[agent.access]}`}>
-                        {agent.access}
-                      </span>
+                      <div className="flex flex-col gap-2 items-start">
+                        {(Array.isArray(agent.access) ? agent.access : [agent.access]).map((accessLevel) => (
+                          <span key={accessLevel} className={`inline-flex text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap ${accessStyles[accessLevel]}`}>
+                            {accessLevel}
+                          </span>
+                        ))}
+                      </div>
                     </td>
                   </tr>
                 )

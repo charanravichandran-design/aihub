@@ -1,11 +1,11 @@
-export type AccessLevel = 'All Employees' | 'All Engineering' | 'Only Support Org'
+export type AccessLevel = 'All Employees' | 'All Engineering' | 'Support Org' | 'Customer Support' | 'Technical Field Engineers'
 
 export type Agent = {
   id: string
   name: string
   functionality: string
   steward: string
-  access: AccessLevel
+  access: AccessLevel | AccessLevel[]
   iconName: string
 }
 
@@ -15,7 +15,7 @@ export const agents: Agent[] = [
     name: 'Support AI',
     functionality: 'Enable support engineers to triage, debug, summarize, and hand over support tickets in Zendesk.',
     steward: 'Shashank Chandok',
-    access: 'Only Support Org',
+    access: 'Support Org',
     iconName: 'LifeBuoy',
   },
   {
@@ -41,5 +41,13 @@ export const agents: Agent[] = [
     steward: 'Bala Gopal',
     access: 'All Engineering',
     iconName: 'FlaskConical',
+  },
+  {
+    id: 'dross',
+    name: 'Dross',
+    functionality: 'An investigation workflow agent which can help debug problems in Couchbase by leveraging logs, metrics and knowledge.',
+    steward: 'Brian Powers',
+    access: ['All Engineering', 'Support Org', 'Technical Field Engineers'],
+    iconName: 'SearchCode',
   },
 ]

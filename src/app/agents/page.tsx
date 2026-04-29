@@ -6,7 +6,7 @@ import {
   SearchCode,
   type LucideIcon,
 } from 'lucide-react'
-import { AppHeader } from '@/components/AppHeader'
+import { AgentsHeader } from '@/components/AgentsHeader'
 import { agents, type AccessLevel } from '@/data/agents'
 
 const iconMap: Record<string, LucideIcon> = {
@@ -28,7 +28,7 @@ const accessStyles: Record<AccessLevel, string> = {
 export default function AgentsPage() {
   return (
     <div className="min-h-screen px-6 py-10 sm:px-10 lg:px-16">
-      <AppHeader pageTitle="Agent Hub" />
+      <AgentsHeader />
 
       {/* Hero */}
       <div className="max-w-6xl mx-auto mb-8">
@@ -92,23 +92,35 @@ export default function AgentsPage() {
                     {/* Steward */}
                     <td className="px-8 py-6 align-top w-56">
                       <div className="flex flex-col gap-1">
-                        {agent.steward.split(', ').map((name) => (
-                          <span key={name} className="text-gray-700 dark:text-gray-300 font-medium leading-snug">
-                            {name}
-                          </span>
-                        ))}
+                        {typeof agent.access === 'string'
+                          ? agent.steward.split(', ').map((name) => (
+                              <span key={name} className="text-gray-700 dark:text-gray-300 font-medium leading-snug">
+                                {name}
+                              </span>
+                            ))
+                          : agent.steward.split(', ').map((name) => (
+                              <span key={name} className="text-gray-700 dark:text-gray-300 font-medium leading-snug">
+                                {name}
+                              </span>
+                            ))}
                       </div>
                     </td>
 
                     {/* Access badge */}
                     <td className="px-8 py-6 align-top w-52">
-                      <div className="flex flex-col gap-2 items-start">
-                        {(Array.isArray(agent.access) ? agent.access : [agent.access]).map((accessLevel) => (
-                          <span key={accessLevel} className={`inline-flex text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap ${accessStyles[accessLevel]}`}>
-                            {accessLevel}
-                          </span>
-                        ))}
-                      </div>
+                      {typeof agent.access === 'string' ? (
+                        <span className={`inline-flex text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap ${accessStyles[agent.access]}`}>
+                          {agent.access}
+                        </span>
+                      ) : (
+                        <div className="flex flex-col gap-1">
+                          {agent.access.map((access) => (
+                            <span key={access} className={`inline-flex text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap ${accessStyles[access]}`}>
+                              {access}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </td>
                   </tr>
                 )

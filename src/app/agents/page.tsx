@@ -1,31 +1,12 @@
-import {
-  FlaskConical,
-  GitPullRequest,
-  LifeBuoy,
-  PenLine,
-  SearchCode,
-  type LucideIcon,
-} from 'lucide-react'
 import { AgentsHeader } from '@/components/AgentsHeader'
-import { agents, type AccessLevel } from '@/data/agents'
+import { AgentsTable } from '@/components/AgentsTable'
+import { fetchAgents } from '@/lib/couchbase'
 
-const iconMap: Record<string, LucideIcon> = {
-  LifeBuoy,
-  PenLine,
-  GitPullRequest,
-  FlaskConical,
-  SearchCode,
-}
+export const dynamic = 'force-dynamic'
 
-const accessStyles: Record<AccessLevel, string> = {
-  'All Employees':    'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400',
-  'All Engineering':  'bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-400',
-  'Support Org': 'bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400',
-  'Customer Support': 'bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400',
-  'Technical Field Engineers': 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-400',
-}
+export default async function AgentsPage() {
+  const agents = await fetchAgents()
 
-export default function AgentsPage() {
   return (
     <div className="min-h-screen px-6 py-10 sm:px-10 lg:px-16">
       <AgentsHeader />
@@ -42,92 +23,15 @@ export default function AgentsPage() {
 
       {/* Table */}
       <main className="max-w-6xl mx-auto">
-        <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden shadow-sm">
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="border-b border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/[0.03]">
-                <th className="text-left px-8 py-5 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                  Agent
-                </th>
-                <th className="text-left px-8 py-5 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                  Functionality
-                </th>
-                <th className="text-left px-8 py-5 text-xs font-semibold text-gray-400 uppercase tracking-wider whitespace-nowrap">
-                  Agent Steward
-                </th>
-                <th className="text-left px-8 py-5 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                  Access
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {agents.map((agent, index) => {
-                const Icon = iconMap[agent.iconName] ?? LifeBuoy
-                return (
-                  <tr
-                    key={agent.id}
-                    className={`
-                      transition-colors duration-150
-                      hover:bg-gray-50 dark:hover:bg-white/[0.04]
-                      ${index !== 0 ? 'border-t border-gray-100 dark:border-white/10' : ''}
-                    `}
-                  >
-                    {/* Agent name + icon */}
-                    <td className="px-8 py-6 align-top w-72">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-lg bg-gray-100 dark:bg-white/10 flex items-center justify-center shrink-0">
-                          <Icon size={16} className="text-gray-600 dark:text-gray-300" strokeWidth={1.75} />
-                        </div>
-                        <span className="font-semibold text-gray-900 dark:text-white leading-snug">
-                          {agent.name}
-                        </span>
-                      </div>
-                    </td>
-
-                    {/* Functionality */}
-                    <td className="px-8 py-6 align-top text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm">
-                      {agent.functionality}
-                    </td>
-
-                    {/* Steward */}
-                    <td className="px-8 py-6 align-top w-56">
-                      <div className="flex flex-col gap-1">
-                        {typeof agent.access === 'string'
-                          ? agent.steward.split(', ').map((name) => (
-                              <span key={name} className="text-gray-700 dark:text-gray-300 font-medium leading-snug">
-                                {name}
-                              </span>
-                            ))
-                          : agent.steward.split(', ').map((name) => (
-                              <span key={name} className="text-gray-700 dark:text-gray-300 font-medium leading-snug">
-                                {name}
-                              </span>
-                            ))}
-                      </div>
-                    </td>
-
-                    {/* Access badge */}
-                    <td className="px-8 py-6 align-top w-52">
-                      {typeof agent.access === 'string' ? (
-                        <span className={`inline-flex text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap ${accessStyles[agent.access]}`}>
-                          {agent.access}
-                        </span>
-                      ) : (
-                        <div className="flex flex-col gap-1">
-                          {agent.access.map((access) => (
-                            <span key={access} className={`inline-flex text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap ${accessStyles[access]}`}>
-                              {access}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        {agents.length === 0 ? (
+          <div className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-12 text-center shadow-sm">
+            <p className="text-gray-400 dark:text-gray-500 text-sm">
+              No agents found. Check the Couchbase connection or add agents via the Query Workbench.
+            </p>
+          </div>
+        ) : (
+          <AgentsTable agents={agents} />
+        )}
       </main>
     </div>
   )
